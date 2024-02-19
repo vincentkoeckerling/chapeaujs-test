@@ -1,0 +1,5 @@
+.w-richtext-figure-type-video [c-video],
+.w-richtext-figure-type-video .c-video,
+.w-richtext-figure-type-video .c-video * {
+	font-size: inherit !important;
+}

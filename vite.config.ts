@@ -8,7 +8,7 @@ export default defineConfig({
 			entry: resolve(__dirname, "src/main.js"),
 			formats: ["iife"],
 			name: "Chapeau",
-			fileName: () => "chapeaujs-test.js",
+			fileName: () => "chapeau.js",
 		},
 	},
 });

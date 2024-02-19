@@ -1,13 +1,4 @@
-import { second } from "./second.js";
+import { loadVideos } from "./yt_embed.js";
+import { loadMaps } from "./gm_embed.js";
 
-console.log("Running test ....");
-
-second();
-
-const element = document.getElementById("test");
-element.textContent = "Replaced by Javascript!!!";
-
-export default {
-	name: "Chapeau",
-	version: "test",
-};
+export { loadVideos, loadMaps };
