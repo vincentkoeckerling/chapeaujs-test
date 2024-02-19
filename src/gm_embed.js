@@ -23,7 +23,7 @@ function createMap($el) {
 
 	const url = $el.dataset.url;
 
-	$overlay.addEventListener("click", () => Chapeau.loadMaps());
+	$overlay.addEventListener("click", () => loadMaps());
 	$link.addEventListener("click", (e) => e.stopPropagation());
 
 	function load() {

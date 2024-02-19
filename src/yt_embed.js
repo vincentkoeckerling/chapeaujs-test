@@ -15,14 +15,28 @@ const videoHTML = `
 		</div>
 	`;
 
-function getIdFromUrl(urlString) {
-	const url = new URL(urlString);
-	let videoId = url.searchParams.get("v"); // Full URL
-	if (!videoId) {
-		videoId = url.pathname.split("/").slice(-1); // Short URL
-	}
+let videos;
 
-	return videoId;
+export function initialize() {
+	// Convert all embedded YT-Elements
+	Array.from(document.querySelectorAll(".w-richtext-figure-type-video > div, .w-embed-youtubevideo")).forEach((el) => {
+		const url = el.querySelector("iframe").src;
+		el.setAttribute("c-video", "");
+		el.setAttribute("data-url", url);
+	});
+
+	videos = Array.from(document.querySelectorAll("[c-video]")).map(createVideo);
+
+	const accept = sessionStorage.getItem("c-accept_yt");
+	if (accept == "true") {
+		loadVideos();
+	}
+}
+
+export function loadVideos() {
+	videos.forEach((video) => video.load());
+
+	sessionStorage.setItem("c-accept_yt", true);
 }
 
 /** @param {HTMLElement} $el */
@@ -75,23 +89,12 @@ function createVideo($el) {
 	};
 }
 
-// Convert all embedded YT-Elements
-Array.from(document.querySelectorAll(".w-richtext-figure-type-video > div, .w-embed-youtubevideo")).forEach((el) => {
-	const url = el.querySelector("iframe").src;
-	el.setAttribute("c-video", "");
-	el.setAttribute("data-url", url);
-});
+function getIdFromUrl(urlString) {
+	const url = new URL(urlString);
+	let videoId = url.searchParams.get("v"); // Full URL
+	if (!videoId) {
+		videoId = url.pathname.split("/").slice(-1); // Short URL
+	}
 
-const videos = Array.from(document.querySelectorAll("[c-video]")).map(createVideo);
-function loadVideos() {
-	videos.forEach((video) => video.load());
-
-	sessionStorage.setItem("c-accept_yt", true);
+	return videoId;
 }
-
-const accept = sessionStorage.getItem("c-accept_yt");
-if (accept == "true") {
-	loadVideos();
-}
-
-export { loadVideos };
